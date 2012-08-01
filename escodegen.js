@@ -262,8 +262,49 @@
         return target;
     }
 
-    function generateNumber(value) {
-        var result, point, temp, exponent, pos;
+    function desugarNumber(value) {
+        var primaryExpression;
+        var isNegative = (value < 0 || 1 / value < 0);
+
+        // NaN
+        if (value !== value) {
+            return {
+                type: Syntax.BinaryExpression,
+                operator: '/',
+                left: {
+                    type: Syntax.Literal,
+                    value: 0
+                },
+                right: {
+                    type: Syntax.Literal,
+                    value: 0
+                }
+            };
+        }
+
+        if (isNegative) {
+            return {
+                type: Syntax.UnaryExpression,
+                operator: '-',
+                argument: value
+            };
+        } else {
+            return null;
+        }
+    }
+
+    function generateNumber(expr) {
+        var result, point, temp, exponent, pos, value, desugaredExpr;
+        value = expr.value;
+
+        desugaredExpr = desugarNumber(value);
+        if (desugaredExpr !== null) {
+            return generateExpression(desugaredExpr, {
+                precedence: Precedence.Unary,
+                allowIn: false,
+                allowCall: false
+            });
+        }
 
         if (value !== value) {
             throw new Error('Numeric literal whose value is NaN');
@@ -985,7 +1026,7 @@
             }
 
             if (typeof expr.value === 'number') {
-                result = generateNumber(expr.value);
+                result = generateNumber(expr);
                 break;
             }
 

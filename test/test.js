@@ -3660,7 +3660,43 @@ data = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 4 }
             }
-        }
+        },
+
+        '-42': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'Literal',
+                value: -42,
+                range: [0, 3],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 3 },
+                }
+            },
+            range: [0, 3],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 3 },
+            }
+        },
+
+        '0 / 0': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'Literal',
+                value: NaN,
+                range: [0, 5],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 5 },
+                }
+            },
+            range: [0, 5],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 5 },
+            }
+        },
 
     },
 
