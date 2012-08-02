@@ -568,14 +568,9 @@
 
         if (stmt.leadingComments) {
             save = result;
+            result = '';
 
-            comment = stmt.leadingComments[0];
-            result = generateComment(comment);
-            if (!endsWithLineTerminator(result)) {
-                result += '\n';
-            }
-
-            for (i = 1, len = stmt.leadingComments.length; i < len; i += 1) {
+            for (i = 0, len = stmt.leadingComments.length; i < len; i += 1) {
                 comment = stmt.leadingComments[i];
                 fragment = generateComment(comment);
                 if (!endsWithLineTerminator(fragment)) {
